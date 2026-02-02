@@ -1149,6 +1149,10 @@ namespace Microsoft.Language.Xml
                 // /* AllowExpr */' /* IsBracketed */'
                 name = ((XmlNameSyntax.Green)ParseXmlQualifiedName(false, false, ScannerState.EndElement, ScannerState.EndElement));
             }
+            else
+            {
+                name = XmlName(null, (XmlNameTokenSyntax.Green)MissingToken(SyntaxKind.XmlNameToken));
+            }
 
             VerifyExpectedToken(SyntaxKind.GreaterThanToken, ref greaterToken, nextState);
             Debug.Assert(greaterToken != null);
@@ -1378,8 +1382,8 @@ namespace Microsoft.Language.Xml
 
             return XmlDeclaration(
                 beginPrologue,
-                (nodes[0] as SyntaxToken.Green),
-                (nodes[1] as XmlDeclarationOptionSyntax.Green),
+                (SyntaxToken.Green)nodes[0],
+                (XmlDeclarationOptionSyntax.Green)nodes[1],
                 encodingIndex == 0 ? null : (nodes[encodingIndex] as XmlDeclarationOptionSyntax.Green),
                 standaloneIndex == 0 ? null : (nodes[standaloneIndex] as XmlDeclarationOptionSyntax.Green),
                 endPrologue);
